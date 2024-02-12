@@ -2,6 +2,7 @@ console.log("hi");
 
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
+
 const mouse={
     x: undefined,
     y: undefined,
@@ -19,7 +20,7 @@ function drawcircle(){
     ctx.strokeStyle ='red';
     ctx.lineWidth = 3;
     ctx.beginPath();
-    ctx.arc(mouse.x,40,5,0, Math.PI * 2);// i add the mouse x&y and doesnt wanna show
+    ctx.arc(mouse.x,mouse.y,5,0, Math.PI * 2);// i add the mouse x&y and doesnt wanna show
     ctx.fill();
     ctx.stroke();
     console.log(ctx)
