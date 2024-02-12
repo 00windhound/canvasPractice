@@ -4,6 +4,7 @@ const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
 var canrect = canvas.getBoundingClientRect();
 const allparticles=[];
+let hue = 0;
 
 const mouse={
     x: undefined,
@@ -14,12 +15,18 @@ canvas.addEventListener('click', function(event){
     mouse.x= event.clientX - canrect.left;
     mouse.y= event.clientY - canrect.top;
     console.log("x=",mouse.x,"y=",mouse.y)
+    for(let y=0; y<10;y++){
+    allparticles.push(new particle())
+    }
    // drawcircle(); //this one works when you click
 })   
 
 canvas.addEventListener('mousemove',function(event){
     mouse.x = event.clientX - canrect.left; 
     mouse.y = event.clientY - canrect.top;
+    for(let y=0; y<5;y++){
+        allparticles.push(new particle())
+    }
     //drawcircle()  // they work!!!
 })
 
@@ -38,17 +45,20 @@ canvas.addEventListener('mousemove',function(event){
 
 class particle{
     constructor(){
-        /*this.x = mouse.x;
-        this.y = mouse.y;*/
-        this.x = Math.random()*canvas.width;
-        this.y = Math.random()*canvas.height;
-        this.size = Math.random()*30+1;
+        this.x = mouse.x;
+        this.y = mouse.y;
+       // this.x = Math.random()*canvas.width;
+       // this.y = Math.random()*canvas.height;
+        this.size = Math.random()*10+1;
         this.speedx = Math.random()*3-1.5;
         this.speedy = Math.random()*3-1.5;
     }
     update(){
         this.x += this.speedx;
         this.y += this.speedy;
+        if(this.size>0.2){
+            this.size-=0.1;
+        }
     }
     draw(){
         ctx.fillStyle = 'white'
@@ -58,64 +68,33 @@ class particle{
     }
 }
 
-function init(){
+/*function init(){
     for(let i=0; i<100; i++){
         allparticles.push(new particle())
     }
 }
-init();
+
+init();*/
+
 console.log(allparticles);
 
 function handleparticles(){
     for(let j=0; j<allparticles.length; j++){
         allparticles[j].update();
         allparticles[j].draw();
+        if(allparticles[j].size<= 0.3){
+            allparticles.splice(j,1);
+            j--;
+            //console.log(allparticles)
+        }
     }
 }
 
 function animate(){
-    ctx.clearRect(0,0,canvas.width, canvas.height);
+   // ctx.clearRect(0,0,canvas.width, canvas.height);
+   ctx.fillStyle = 'rgba(0,0,0,0.01';
+   ctx.fillRect(0,0,canvas.clientWidth,canvas.height);
     handleparticles();
     requestAnimationFrame(animate);
 }
 animate();
-
-/*const ctx2 = canvas.getContext("2d");
-
-ctx2.fillStyle = 'white';
-// ctx2.strokeStyle = 'red';
-// ctx2.lineWidth = '8';
-ctx2.fillRect(10,10, 7, 7);
-// ctx2.stroke();  did nothing
-
-
-ctx.fillStyle= 'red';
-ctx.strokeStyle = 'red';
-ctx.lineWidth = 15;
-ctx.beginPath();
-ctx.arc(430, 240, 50, 0, Math.PI*2, true);
-ctx.fill();
-ctx.stroke();
-console.log(ctx);
-console.log(ctx2);
-
-const mouse ={
-    x: null,
-    y: null,
-}
-
-function drawcircle(){
-    ctx.fillStyle= 'red';
-    ctx.beginPath();
-    ctx.arc(300,359,5,0, Math.PI*2);
-    ctx.fill();
-}
-drawcircle();
-
-canvas.addEventListener('click', function(event){
-    mouse.x = event.x;
-    mouse.y = event.y;
-    console.log(event);
-    drawcircle();
-})*/
-
