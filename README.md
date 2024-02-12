@@ -5,3 +5,5 @@ trying to start but i cant do anything without errors. i could copy code exactly
 i have the circle printing and the cordinates of the mouse but i cant put the two together?
 
 its far less glitchy when it always has the lines and their size doesnt seem to matter. not exactly the design i was going for but its much cleanner.
+
+i really like how it turned out. so now im going to make new canvas projects. ill have bottons on the top to navigate different projects and theyll all display in the same place.

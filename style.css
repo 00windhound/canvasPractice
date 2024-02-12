@@ -1,6 +1,9 @@
 #canvas1{
     position: absolute;
     background: black;
-    top: 30;
+    /*top: 30;*/
     left: 10px;
+}
+#mycanvas2{
+    background: grey;
 }

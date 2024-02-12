@@ -1,6 +1,6 @@
 console.log("hi");
 
-const canvas = document.getElementById("canvas1");
+const canvas = document.getElementById("mycanvas");
 const ctx = canvas.getContext("2d");
 var canrect = canvas.getBoundingClientRect();
 const allparticles=[];
@@ -30,14 +30,6 @@ canvas.addEventListener('mousemove',function(event){
     //drawcircle()  // they work!!!
 })
 
-/*function nomouse(){
-    if(allparticles.length < 8){
-        mouse.x =Math.random()*canvas.width
-        mouse.y =Math.random()*canvas.height;
-        allparticles.push(new particle());
-        handleparticles();
-    }
-}*/
 function nomouse(){
     
         setTimeout(()=>{
@@ -117,9 +109,9 @@ function handleparticles(){
 }
 
 function animate(){
-    ctx.clearRect(0,0,canvas.width, canvas.height);
-  // ctx.fillStyle = 'rgba(0,0,0,0.01';
-  // ctx.fillRect(0,0,canvas.clientWidth,canvas.height);
+   // ctx.clearRect(0,0,canvas.width, canvas.height);
+   ctx.fillStyle = 'rgba(0,0,0,0.3';
+   ctx.fillRect(0,0,canvas.clientWidth,canvas.height);
     handleparticles();
     hue+=2;
     requestAnimationFrame(animate);
