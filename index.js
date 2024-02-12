@@ -30,16 +30,26 @@ canvas.addEventListener('mousemove',function(event){
     //drawcircle()  // they work!!!
 })
 
-function nomouse(){
- 
-    if(allparticles.length < 10){
+/*function nomouse(){
+    if(allparticles.length < 8){
         mouse.x =Math.random()*canvas.width
         mouse.y =Math.random()*canvas.height;
         allparticles.push(new particle());
         handleparticles();
     }
+}*/
+function nomouse(){
+    
+        setTimeout(()=>{
+            mouse.x =Math.random()*canvas.width;
+            mouse.y = Math.random()*canvas.height;
+            allparticles.push(new particle());
+            handleparticles();
+            nomouse();
+        },100)
+    
 }
-
+nomouse();
 
 
 
@@ -88,7 +98,7 @@ function handleparticles(){
             const dx = allparticles[j].x - allparticles[k].x;
             const dy = allparticles[j].y - allparticles[k].y;
             const distance = Math.sqrt(dx * dx * dy * dy);
-            if (distance<50000){
+            if (distance<150000){
                 ctx.beginPath();
                 ctx.strokeStyle = allparticles[j].color;
                 ctx.lineWidth = allparticles[j].size/5;
@@ -100,7 +110,7 @@ function handleparticles(){
         if(allparticles[j].size<= 0.3){
             allparticles.splice(j,1);
             j--;
-            nomouse();
+           // nomouse();
             //console.log(allparticles)
         }
     }
