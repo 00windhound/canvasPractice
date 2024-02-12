@@ -1,8 +1,6 @@
 #canvas1{
     position: absolute;
     background: black;
-    width: 1500px;
-    height: 650px;
     top: 30;
     left: 10px;
 }
