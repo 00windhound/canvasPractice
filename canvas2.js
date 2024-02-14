@@ -16,15 +16,15 @@ canvas.addEventListener('click',function(event){
     console.log(allcircles)
     allcircles.push(new circle());
 })
-
+// maybe if i scroll then reload it forgets that i scrolled
 
 class circle{
     constructor(){
         this.x = mouse.x;
         this.y = mouse.y;
-        //this.x = Math.random()*canvas.Width //goimg from undefined to nan
-        //this.y = Math.random()*canvas.height  //canvas width is undefined
-        this.size = Math.random()*5+1;
+        //this.x = Math.random()*canvas.Width 
+        //this.y = Math.random()*canvas.height 
+        this.size = Math.random()*30+1;
         this.speedx = Math.random()*3-1.5
         this.speedy = Math.random()*3-1.5
        // this.color = 
@@ -36,21 +36,21 @@ class circle{
        /* if(this.size>0.2){   // shrinks the circles down to dust
             this.size-=0.1;
         }*/
-        console.log(allcircles)
     }
     draw(){
         ctx.fillStyle = 'white';
         ctx.beginPath();
-        ctx.arc(this.x,this.y,10,0, Math.PI*2);
+        ctx.arc(this.x,this.y,this.size,0, Math.PI*2);
         ctx.fill();
     }
 }
-
+// maybe they constantly grow and when they hit a certan size they explode into babies
+// they also shrink or eat smaller circles when they touch
 function wallcolision(){
     for(let k=0; k< allcircles.length; k++){
-        console.log(k)
+
         if(allcircles[k].x < 0){
-            allcircles[k].x = 0.0001;
+            allcircles[k].x = 0;
             allcircles[k].speedx = allcircles[k].speedx * -1;
             
         }
@@ -60,7 +60,7 @@ function wallcolision(){
             
         }
         else if(allcircles[k].y < 0){
-            allcircles[k].y = 0.0001;
+            allcircles[k].y = 0;
             allcircles[k].speedy = allcircles[k].speedy * -1;
            
         }
@@ -70,22 +70,8 @@ function wallcolision(){
             
         }
         // i want to adjust it so the edge of the circle bounces not the middle
-
-        //if(allcircles[k].x < 0 || allcircles[k].x > 1500){
-         //   allcircles[k].speedx = allcircles[k].speedx * -1 /*this is working 
-          //  but it switches back and forth before circle gets back in range */
-           // allcircles[k].splice(k,1)
-           // k--
-       // }
-        //else if(allcircles[k].y < 0 || allcircles[k].y > 1500){
-        //    allcircles[k].speedy = allcircles[k].speedy * -1
-         // allcircles[k].splice(k,1)
-         // k--
-       // }
-       // else return;// circle is out of frame but x is 620
-    }  // it works but only for the first circle tho, the for loop is not cycling
-    // it works only if there is 1 circle otherwhise it breaks.
-    // also at some point the circles are spawning way below the click
+        // also at some point the circles are spawning way below the click
+    }
 }
 
 function handleparticles (){
@@ -96,7 +82,7 @@ function handleparticles (){
 }
 
 function init(){
-    for(let i=0; i<1; i++){
+    for(let i=0; i<15; i++){
         mouse.x = Math.random()*1500;
         mouse.y = Math.random()*canvas.height
         allcircles.push(new circle());
