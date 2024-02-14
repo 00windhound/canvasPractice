@@ -62,6 +62,7 @@ function wallcolision(){
         else return;// circle is out of frame but x is 620
     }  // it works but only for the first circle tho, the for loop is not cycling
     // it works only if there is 1 circle otherwhise it breaks.
+    // also at some point the circles are spawning way below the click
 }
 
 function handleparticles (){
