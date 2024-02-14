@@ -69,10 +69,7 @@ function wallcolision(){
             allcircles[k].speedy = allcircles[k].speedy * -1;
             
         }
-        // speed value is changing but not from negative to positive
-        //
-
-
+        // i want to adjust it so the edge of the circle bounces not the middle
 
         //if(allcircles[k].x < 0 || allcircles[k].x > 1500){
          //   allcircles[k].speedx = allcircles[k].speedx * -1 /*this is working 
