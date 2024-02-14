@@ -3,6 +3,7 @@ var ctx = canvas.getContext('2d');
 var canvasrect = canvas.getBoundingClientRect();
 const allcircles = [];
 
+
 const mouse ={
     x: undefined,
     y: undefined,
@@ -29,12 +30,13 @@ class circle{
        // this.color = 
     }
     update(){
-        this.x += this.speedx;  // this.x is returning nan
+        this.x += this.speedx;  
         this.y += this.speedy;
         wallcolision();
        /* if(this.size>0.2){   // shrinks the circles down to dust
             this.size-=0.1;
         }*/
+        console.log(allcircles)
     }
     draw(){
         ctx.fillStyle = 'white';
@@ -47,11 +49,15 @@ class circle{
 function wallcolision(){
     for(let k=0; k<allcircles.length; k++){
         if(allcircles[k].x < 0 || allcircles[k].x > 1500){
-            allcircles[k].speedx === -allcircles[k].speedx;
+           // allcircles[k].speedx === -allcircles[k].speedx;
+            allcircles[k].splice(k,1)
+            k--
         }
         else return;
         if(allcircles[k].y < 0 || allcircles[k].y > 1500){
-            allcircles[k].speedy = -allcircles[k].speedy;
+          //  allcircles[k].speedy = -allcircles[k].speedy;
+          allcircles[k].splice(k,1)
+          k--
         }
         else return;// circle is out of frame but x is 620
     }
