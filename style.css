@@ -6,6 +6,7 @@
 }
 #mycanvas2{
     background: grey;
+    border:2px solid black;
 }
 button{
     background-color: hsl(0, 0%, 70%);
