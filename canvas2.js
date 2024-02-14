@@ -2,10 +2,10 @@ const canvas = document.getElementById('mycanvas2');
 var ctx = canvas.getContext('2d');
 var canvasrect = canvas.getBoundingClientRect();
 const allcircles = [];
-
+// x and y should be directly connected to the canvas
 
 const mouse ={
-    x: undefined,
+    x: undefined ,
     y: undefined,
 }
 
@@ -41,26 +41,27 @@ class circle{
     draw(){
         ctx.fillStyle = 'white';
         ctx.beginPath();
-        ctx.arc(this.x,this.y,this.size,0, Math.PI*2);
+        ctx.arc(this.x,this.y,10,0, Math.PI*2);
         ctx.fill();
     }
 }
 
 function wallcolision(){
-    for(let k=0; k<allcircles.length; k++){
+    for(let k=0; k< allcircles.length; k++){
         if(allcircles[k].x < 0 || allcircles[k].x > 1500){
-           // allcircles[k].speedx === -allcircles[k].speedx;
-            allcircles[k].splice(k,1)
-            k--
+            allcircles[k].speedx = allcircles[k].speedx * -1 /*this is working 
+            but it switches back and forth before circle gets back in range */
+           // allcircles[k].splice(k,1)
+           // k--
         }
-        else return;
-        if(allcircles[k].y < 0 || allcircles[k].y > 1500){
-          //  allcircles[k].speedy = -allcircles[k].speedy;
-          allcircles[k].splice(k,1)
-          k--
+        else if(allcircles[k].y < 0 || allcircles[k].y > 1500){
+            allcircles[k].speedy = allcircles[k].speedy * -1
+         // allcircles[k].splice(k,1)
+         // k--
         }
         else return;// circle is out of frame but x is 620
-    }
+    }  // it works but only for the first circle tho, the for loop is not cycling
+    // it works only if there is 1 circle otherwhise it breaks.
 }
 
 function handleparticles (){
@@ -71,7 +72,7 @@ function handleparticles (){
 }
 
 function init(){
-    for(let i=0; i<100; i++){
+    for(let i=0; i<1; i++){
         mouse.x = Math.random()*1500;
         mouse.y = Math.random()*canvas.height
         allcircles.push(new circle());
