@@ -48,18 +48,44 @@ class circle{
 
 function wallcolision(){
     for(let k=0; k< allcircles.length; k++){
-        if(allcircles[k].x < 0 || allcircles[k].x > 1500){
-            allcircles[k].speedx = allcircles[k].speedx * -1 /*this is working 
-            but it switches back and forth before circle gets back in range */
+        console.log(k)
+        if(allcircles[k].x < 0){
+            allcircles[k].x = 0.0001;
+            allcircles[k].speedx = allcircles[k].speedx * -1;
+            
+        }
+        else if(allcircles[k].x > 1500){
+            allcircles[k].x = 1500
+            allcircles[k].speedx = allcircles[k].speedx * -1;
+            
+        }
+        else if(allcircles[k].y < 0){
+            allcircles[k].y = 0.0001;
+            allcircles[k].speedy = allcircles[k].speedy * -1;
+           
+        }
+        else if(allcircles[k].y > 1500){
+            allcircles[k].y = 1500
+            allcircles[k].speedy = allcircles[k].speedy * -1;
+            
+        }
+        // speed value is changing but not from negative to positive
+        //
+
+
+
+        //if(allcircles[k].x < 0 || allcircles[k].x > 1500){
+         //   allcircles[k].speedx = allcircles[k].speedx * -1 /*this is working 
+          //  but it switches back and forth before circle gets back in range */
            // allcircles[k].splice(k,1)
            // k--
-        }
-        else if(allcircles[k].y < 0 || allcircles[k].y > 1500){
-            allcircles[k].speedy = allcircles[k].speedy * -1
+       // }
+        //else if(allcircles[k].y < 0 || allcircles[k].y > 1500){
+        //    allcircles[k].speedy = allcircles[k].speedy * -1
          // allcircles[k].splice(k,1)
          // k--
-        }
-        else return;// circle is out of frame but x is 620
+       // }
+       // else return;// circle is out of frame but x is 620
     }  // it works but only for the first circle tho, the for loop is not cycling
     // it works only if there is 1 circle otherwhise it breaks.
     // also at some point the circles are spawning way below the click
