@@ -8,6 +8,10 @@
     background: grey;
     border:2px solid black;
 }
+#mycanvas3{
+    border: 2px solid black;
+    
+}
 button{
     background-color: hsl(0, 0%, 70%);
     border-radius: 5px;
