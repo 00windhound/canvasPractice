@@ -44,7 +44,7 @@ class circle{
                 allcircles.push(g());
             }
         }*/
-       // explode()
+        explode()
     }
     draw(){
         ctx.fillStyle = 'white';
@@ -83,24 +83,30 @@ function wallcolision(){
     }
 }
 
-/*function explode (){
+function explode (){
     for(let l=0; l<allcircles.length; l++){
         allcircles[l].size += 0.01;
         if(allcircles[l].size > 20){
-            allcircles[l].size = 19;
+            allcircles[l].size = 6;
             for(let i=1; i<4; i++){
-                let circle= new circle; // idk how to do this. i need to make more small circles here
-                circle.size = 1;
-                allcircles.push(circle());
+                let circle={
+                    x: allcircles[l],
+                    y: allcircles[l],
+                    size: 1,
+                    speedx: Math.random()*3-1.5,
+                    speedy: Math.random()*3-1.5
+                   // color: 
+                }; // idk how to do this. i need to make more small circles here
+                allcircles.push(circle);
             }
         }
     }
-}*/
+}
 // ill make them kill eachother off if they collide. if they collide then figure out which is smaller and delete it. 
 
-function handleparticles (){
+function handleparticles (){ 
     for(let j =0; j< allcircles.length; j++){
-        allcircles[j].update();
+        allcircles[j].update(); //throwing an error, not a function
         allcircles[j].draw();
     }
 }
