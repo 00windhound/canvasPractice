@@ -44,7 +44,7 @@ class circle{
                 allcircles.push(g());
             }
         }*/
-        explode()
+       // explode()
     }
     draw(){
         ctx.fillStyle = 'white';
@@ -83,7 +83,7 @@ function wallcolision(){
     }
 }
 
-function explode (){
+/*function explode (){
     for(let l=0; l<allcircles.length; l++){
         allcircles[l].size += 0.01;
         if(allcircles[l].size > 20){
@@ -95,8 +95,8 @@ function explode (){
             }
         }
     }
-}
-// ill make them kill eachother off if they collide 
+}*/
+// ill make them kill eachother off if they collide. if they collide then figure out which is smaller and delete it. 
 
 function handleparticles (){
     for(let j =0; j< allcircles.length; j++){
