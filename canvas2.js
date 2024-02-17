@@ -34,8 +34,17 @@ class circle{
         this.y += this.speedy;
         wallcolision();
        /* if(this.size>0.2){   // shrinks the circles down to dust
-            this.size-=0.1;
+            this.size += 0.01;
+        }
+        if(this.size > 20){
+            this.size = 19;
+            for(let i=1; i<4; i++){
+                let circle= new circle;
+                circle.size = 1;
+                allcircles.push(g());
+            }
         }*/
+        explode()
     }
     draw(){
         ctx.fillStyle = 'white';
@@ -73,6 +82,21 @@ function wallcolision(){
         // also at some point the circles are spawning way below the click
     }
 }
+
+function explode (){
+    for(let l=0; l<allcircles.length; l++){
+        allcircles[l].size += 0.01;
+        if(allcircles[l].size > 20){
+            allcircles[l].size = 19;
+            for(let i=1; i<4; i++){
+                let circle= new circle; // idk how to do this. i need to make more small circles here
+                circle.size = 1;
+                allcircles.push(circle());
+            }
+        }
+    }
+}
+// ill make them kill eachother off if they collide 
 
 function handleparticles (){
     for(let j =0; j< allcircles.length; j++){
