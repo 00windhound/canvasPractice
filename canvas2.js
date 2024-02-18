@@ -72,16 +72,17 @@ function wallcolision(){
     }
 }
 
-function explode (){
-    for(let l=0; l<allcircles.length; l++){
+function explode(l){ // l is undefined maybe declair it globally?
+    console.log(index)
+   // for(let l=0; l<allcircles.length; l++){
         allcircles[l].size += 0.002;
         if(allcircles[l].size > 50){
             allcircles[l].size = 10;
 
-          /*  let baby1 = {
+            let baby1 = {
                 x: allcircles[l],
                 y: allcircles[l],
-                size:1,
+                size: 1,
                 speedx: Math.random()*3-1.5,
                 speedy: Math.random()*3-1.5
             };
@@ -93,7 +94,7 @@ function explode (){
                 speedy: Math.random()*3-1.5
             };
 
-            allcircles.push(baby1, baby2)*/
+            allcircles.push(baby1, baby2);
            /* for(let i=1; i<2; i++){
                 let circle1={
                     x: allcircles[l],
@@ -106,15 +107,16 @@ function explode (){
                // allcircles.push(circle1);
             }*/
         }  
-    }
+    //}
 }
 // first i need to fix their collision so its not just from the center
 // ill make them kill eachother off if they collide. if they collide then figure out which is smaller and delete it. 
 
 function handleparticles (){ 
-    for(let j =0; j< allcircles.length; j++){
+    for(let j =0; j< allcircles.length -1; j++){
         allcircles[j].update(); //throwing an error, not a function
         allcircles[j].draw();
+        allcircles[j].explode(j);
         // call explode from here and pass the index
     }
 }
