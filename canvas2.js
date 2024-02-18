@@ -33,18 +33,7 @@ class circle{
         this.x += this.speedx;  
         this.y += this.speedy;
         wallcolision();
-       /* if(this.size>0.2){   // shrinks the circles down to dust
-            this.size += 0.01;
-        }
-        if(this.size > 20){
-            this.size = 19;
-            for(let i=1; i<4; i++){
-                let circle= new circle;
-                circle.size = 1;
-                allcircles.push(g());
-            }
-        }*/
-        explode()
+        explode(); // said this is not a function
     }
     draw(){
         ctx.fillStyle = 'white';
@@ -85,11 +74,28 @@ function wallcolision(){
 
 function explode (){
     for(let l=0; l<allcircles.length; l++){
-        allcircles[l].size += 0.01;
-        if(allcircles[l].size > 20){
-            allcircles[l].size = 6;
-            for(let i=1; i<4; i++){
-                let circle={
+        allcircles[l].size += 0.002;
+        if(allcircles[l].size > 50){
+            allcircles[l].size = 10;
+
+          /*  let baby1 = {
+                x: allcircles[l],
+                y: allcircles[l],
+                size:1,
+                speedx: Math.random()*3-1.5,
+                speedy: Math.random()*3-1.5
+            };
+            let baby2 = {
+                x: allcircles[l],
+                y: allcircles[l],
+                size:1,
+                speedx: Math.random()*3-1.5,
+                speedy: Math.random()*3-1.5
+            };
+
+            allcircles.push(baby1, baby2)*/
+           /* for(let i=1; i<2; i++){
+                let circle1={
                     x: allcircles[l],
                     y: allcircles[l],
                     size: 1,
@@ -97,17 +103,19 @@ function explode (){
                     speedy: Math.random()*3-1.5
                    // color: 
                 }; // idk how to do this. i need to make more small circles here
-                allcircles.push(circle);
-            }
-        }
+               // allcircles.push(circle1);
+            }*/
+        }  
     }
 }
+// first i need to fix their collision so its not just from the center
 // ill make them kill eachother off if they collide. if they collide then figure out which is smaller and delete it. 
 
 function handleparticles (){ 
     for(let j =0; j< allcircles.length; j++){
         allcircles[j].update(); //throwing an error, not a function
         allcircles[j].draw();
+        // call explode from here and pass the index
     }
 }
 
