@@ -28,7 +28,7 @@ class circle{
         this.size = Math.random()*30+1;
         this.speedx = Math.random()*3-1.5
         this.speedy = Math.random()*3-1.5
-       // this.color = 
+        this.color = 'white';
     }
     update(){
         this.x += this.speedx;  
@@ -37,7 +37,7 @@ class circle{
        // explode(); // said this is not a function
     }
     draw(){
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(this.x,this.y,this.size,0, Math.PI*2);
         ctx.fill();
@@ -78,11 +78,13 @@ function explode(){ // l is undefined maybe declair it globally?
         allcircles[j].size += 0.02;//0.002
         if(allcircles[j].size > 50){
             allcircles[j].size = 10;
+            allcircles[j].color = 'black'
 
             let baby1 = new circle();
             baby1.x = allcircles[j].x;
             baby1.y = allcircles[j].y;
             baby1.size = 1;
+            baby1.color = 'blue';
 
             /*{
                 x: allcircles[j].x,
@@ -95,26 +97,9 @@ function explode(){ // l is undefined maybe declair it globally?
             baby2.x = allcircles[j].x;
             baby2.y = allcircles[j].y;
             baby2.size = 1;
-            /*{
-                x: allcircles[j].x,
-                y: allcircles[j].y,
-                size:1,
-                speedx: Math.random()*3-1.5,
-                speedy: Math.random()*3-1.5
-            };*/
-            // the  babies are objects not circles
+            baby2.color = 'red';
             allcircles.push(baby1, baby2);
-           /* for(let i=1; i<2; i++){
-                let circle1={
-                    x: allcircles[l],
-                    y: allcircles[l],
-                    size: 1,
-                    speedx: Math.random()*3-1.5,
-                    speedy: Math.random()*3-1.5
-                   // color: 
-                }; // idk how to do this. i need to make more small circles here
-               // allcircles.push(circle1);
-            }*/
+          
         }  
     }
 }
@@ -122,7 +107,7 @@ function explode(){ // l is undefined maybe declair it globally?
 // ill make them kill eachother off if they collide. if they collide then figure out which is smaller and delete it. 
 
 function handleparticles (){ 
-    for( j =0; j< allcircles.length -1; j++){
+    for( j =0; j< allcircles.length; j++){
         allcircles[j].update(); //throwing an error, not a function
         allcircles[j].draw();
       //  allcircles[j].explode();
@@ -133,7 +118,7 @@ function handleparticles (){
 }
 
 function init(){
-    for(let i=0; i<1; i++){
+    for(let i=0; i<0; i++){
         mouse.x = Math.random()*1500;
         mouse.y = Math.random()*canvas.height
         allcircles.push(new circle());
