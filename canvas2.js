@@ -16,7 +16,8 @@ canvas.addEventListener('click',function(event){
     console.log(allcircles)
     allcircles.push(new circle());
 })
-// maybe if i scroll then reload it forgets that i scrolled
+// if i scroll then reload it forgets that i scrolled
+// now its spawning on either side of my mouse 
 
 class circle{
     constructor(){
@@ -32,8 +33,8 @@ class circle{
     update(){
         this.x += this.speedx;  
         this.y += this.speedy;
-        wallcolision();
-        explode(); // said this is not a function
+      //  wallcolision();
+       // explode(); // said this is not a function
     }
     draw(){
         ctx.fillStyle = 'white';
@@ -71,29 +72,37 @@ function wallcolision(){
         // also at some point the circles are spawning way below the click
     }
 }
+let j
+function explode(){ // l is undefined maybe declair it globally?
+    for(let j=0; j<allcircles.length; j++){
+        allcircles[j].size += 0.02;//0.002
+        if(allcircles[j].size > 50){
+            allcircles[j].size = 10;
 
-function explode(l){ // l is undefined maybe declair it globally?
-    console.log(index)
-   // for(let l=0; l<allcircles.length; l++){
-        allcircles[l].size += 0.002;
-        if(allcircles[l].size > 50){
-            allcircles[l].size = 10;
+            let baby1 = new circle();
+            baby1.x = allcircles[j].x;
+            baby1.y = allcircles[j].y;
+            baby1.size = 1;
 
-            let baby1 = {
-                x: allcircles[l],
-                y: allcircles[l],
+            /*{
+                x: allcircles[j].x,
+                y: allcircles[j].y,
                 size: 1,
                 speedx: Math.random()*3-1.5,
                 speedy: Math.random()*3-1.5
-            };
-            let baby2 = {
-                x: allcircles[l],
-                y: allcircles[l],
+            };*/
+            let baby2 =new circle();
+            baby2.x = allcircles[j].x;
+            baby2.y = allcircles[j].y;
+            baby2.size = 1;
+            /*{
+                x: allcircles[j].x,
+                y: allcircles[j].y,
                 size:1,
                 speedx: Math.random()*3-1.5,
                 speedy: Math.random()*3-1.5
-            };
-
+            };*/
+            // the  babies are objects not circles
             allcircles.push(baby1, baby2);
            /* for(let i=1; i<2; i++){
                 let circle1={
@@ -107,22 +116,24 @@ function explode(l){ // l is undefined maybe declair it globally?
                // allcircles.push(circle1);
             }*/
         }  
-    //}
+    }
 }
 // first i need to fix their collision so its not just from the center
 // ill make them kill eachother off if they collide. if they collide then figure out which is smaller and delete it. 
 
 function handleparticles (){ 
-    for(let j =0; j< allcircles.length -1; j++){
+    for( j =0; j< allcircles.length -1; j++){
         allcircles[j].update(); //throwing an error, not a function
         allcircles[j].draw();
-        allcircles[j].explode(j);
+      //  allcircles[j].explode();
         // call explode from here and pass the index
     }
+    wallcolision();
+    explode();
 }
 
 function init(){
-    for(let i=0; i<15; i++){
+    for(let i=0; i<1; i++){
         mouse.x = Math.random()*1500;
         mouse.y = Math.random()*canvas.height
         allcircles.push(new circle());
