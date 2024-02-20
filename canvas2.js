@@ -77,29 +77,27 @@ function explode(){ // l is undefined maybe declair it globally?
     for(let j=0; j<allcircles.length; j++){
         allcircles[j].size += 0.02;//0.002
         if(allcircles[j].size > 50){
-            allcircles[j].size = 10;
-            allcircles[j].color = 'black'
+            allcircles[j].size = 4;
+            allcircles[j].color = 'hsl( 0, 0%, 80%)'
 
             let baby1 = new circle();
             baby1.x = allcircles[j].x;
             baby1.y = allcircles[j].y;
             baby1.size = 1;
-            baby1.color = 'blue';
+            baby1.color = 'hsl( 0, 0%, 100%)';
 
-            /*{
-                x: allcircles[j].x,
-                y: allcircles[j].y,
-                size: 1,
-                speedx: Math.random()*3-1.5,
-                speedy: Math.random()*3-1.5
-            };*/
             let baby2 =new circle();
             baby2.x = allcircles[j].x;
             baby2.y = allcircles[j].y;
-            baby2.size = 1;
-            baby2.color = 'red';
-            allcircles.push(baby1, baby2);
-          
+            baby2.size = 2;
+            baby2.color = 'hsl( 0, 0%, 100%)';
+
+            let baby3 =new circle();
+            baby3.x = allcircles[j].x;
+            baby3.y = allcircles[j].y;
+            baby3.size = 3;
+            baby3.color = 'hsl( 0, 0%, 100%)';
+            allcircles.push(baby1, baby2, baby3);
         }  
     }
 }
@@ -118,7 +116,7 @@ function handleparticles (){
 }
 
 function init(){
-    for(let i=0; i<0; i++){
+    for(let i=0; i<1; i++){
         mouse.x = Math.random()*1500;
         mouse.y = Math.random()*canvas.height
         allcircles.push(new circle());
