@@ -12,17 +12,20 @@ const mouse ={
 canvas.addEventListener('click',function(event){
     mouse.x = event.clientX - canvasrect.left + window.scrollX;
     mouse.y = event.clientY - canvasrect.top + window.scrollY;
-    console.log(mouse)
-    console.log(allcircles)
-    allcircles.push(new circle());
+    let mousecircle = new circle();
+    mousecircle.x = mouse.x;
+    mousecircle.y = mouse.y;
+    //console.log(mouse)
+    //console.log(allcircles)
+    allcircles.push(mousecircle);
 })
 // if i scroll then reload it forgets that i scrolled
 // now its spawning on either side of my mouse 
 let hue;
 class circle{
     constructor(){
-        this.x = mouse.x;
-        this.y = mouse.y;
+        this.x = Math.random()*1500;
+        this.y = Math.random()*1500;
         //this.x = Math.random()*canvas.Width 
         //this.y = Math.random()*canvas.height 
         this.size = Math.random()*30+1;
@@ -71,32 +74,34 @@ function wallcolision(){
     }
 }
 let j
-function explode(){ // l is undefined maybe declair it globally?
+function explode(){
     for(let j=0; j<allcircles.length; j++){
         allcircles[j].size += 0.02;//0.002
         if(allcircles[j].size > 50){
             allcircles[j].size = 4;
-            //allcircles[j].color = 'hsl( '+hue+', 0%, 80%)'
 
             let baby1 = new circle();
             baby1.x = allcircles[j].x;
             baby1.y = allcircles[j].y;
             baby1.size = 1;
-            baby1.hue = allcircles[j].hue + 10;//'hsl( 0, 0%, 100%)';
+            baby1.hue = allcircles[j].hue + 10;
+            baby1.color = 'hsl('+baby1.hue+' , 90%, 40%)';
 
             let baby2 =new circle();
             baby2.x = allcircles[j].x;
             baby2.y = allcircles[j].y;
             baby2.size = 2;
-            baby2.hue = allcircles[j].hue + 20; //
+            baby2.hue = allcircles[j].hue + 10; 
+            baby2.color = 'hsl('+baby2.hue+' , 90%, 40%)';
             //'hsl( 0, 0%, 100%)';
 
             let baby3 =new circle();
             baby3.x = allcircles[j].x;
             baby3.y = allcircles[j].y;
             baby3.size = 3;
-            baby3.hue = allcircles[j].hue + 30; //
-            'hsl('+baby3.hue+' , 0%, 100%)';
+            baby3.hue = allcircles[j].hue + 10; 
+            baby3.color = 'hsl('+baby3.hue+' , 90%, 40%)';
+            
             allcircles.push(baby1, baby2, baby3);
         }  
     }
@@ -113,33 +118,25 @@ function circlecolision (){
                 let radii = allcircles[j].size + allcircles[k].size;
 
                 if(distance > radii){} // not touhcing
-                else if(distance === radii || distance < radii){
-                   // console.log(allcircles)
+                else if(distance === radii || distance < radii){       
                     if(allcircles[j].size < allcircles[k].size){
                         if(allcircles[j].size > 3){
-                            console.log(allcircles[j].size)
                             allcircles[j].size = allcircles[j].size - 3;
-                            
-
+                            allcircles[k].size = allcircles[k].size + 1;
                         }
                         else{
-                            console.log(allcircles[j]+ "pop")
                             allcircles.splice(j,1);
                         }
-                        //console.log("pop!"+ j)
                     }
                     else{
                         if(allcircles[k].size > 3){
-                            console.log(allcircles[k].size)
                             allcircles[k].size = allcircles[k].size - 3;
-                           
-                           // console.log(allcircles[k].size); // not getting deleted right 
+                            allcircles[j].size = allcircles[j].size + 1; 
                         }
                         else{
                             allcircles.splice(k,1);
-                            console.log(allcircles[k]+ "pop")
+                            //console.log(allcircles[k]+ "pop")
                         }
-                       // console.log("pop!"+ k)
                     }
                 }
             }
@@ -170,11 +167,33 @@ function handleparticles (){
 }
 
 function init(){
-    for(let i=0; i<1; i++){
+   /* for(let i=0; i<1; i++){
         mouse.x = Math.random()*1500;
         mouse.y = Math.random()*canvas.height
         allcircles.push(new circle());
-    }
+    }*/
+    let red1 = new circle();
+    let red2 = new circle();
+    let yellow1 = new circle();
+    let yellow2 = new circle();
+    let blue1 = new circle();
+    let blue2 = new circle();
+
+    red1.hue = 0; 
+    red1.color = 'hsl('+red1.hue+' , 90%, 40%)';
+    red2.hue = 0; 
+    red2.color = 'hsl('+red2.hue+' , 90%, 40%)';
+    yellow1.hue = 60; 
+    yellow1.color = 'hsl('+yellow1.hue+' , 90%, 40%)';
+    yellow2.hue = 60; 
+    yellow2.color = 'hsl('+yellow2.hue+' , 90%, 40%)';
+    blue1.hue = 240; 
+    blue1.color = 'hsl('+blue1.hue+' , 90%, 40%)';
+    blue2.hue = 240; 
+    blue2.color = 'hsl('+blue2.hue+' , 90%, 40%)';
+
+    allcircles.push(red1, red2, yellow1, yellow2, blue1, blue2);
+    console.log(allcircles);
 }
 init()
 
