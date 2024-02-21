@@ -18,7 +18,7 @@ canvas.addEventListener('click',function(event){
 })
 // if i scroll then reload it forgets that i scrolled
 // now its spawning on either side of my mouse 
-
+let hue;
 class circle{
     constructor(){
         this.x = mouse.x;
@@ -28,7 +28,9 @@ class circle{
         this.size = Math.random()*30+1;
         this.speedx = Math.random()*3-1.5
         this.speedy = Math.random()*3-1.5
-        this.color = 'white';
+        this.hue = 1;
+        this.color = 'hsl('+this.hue +', 90%, 40%)';
+        this.age = 0;
     }
     update(){
         this.x += this.speedx;  
@@ -74,25 +76,27 @@ function explode(){ // l is undefined maybe declair it globally?
         allcircles[j].size += 0.02;//0.002
         if(allcircles[j].size > 50){
             allcircles[j].size = 4;
-            allcircles[j].color = 'hsl( 0, 0%, 80%)'
+            //allcircles[j].color = 'hsl( '+hue+', 0%, 80%)'
 
             let baby1 = new circle();
             baby1.x = allcircles[j].x;
             baby1.y = allcircles[j].y;
             baby1.size = 1;
-            baby1.color = 'hsl( 0, 0%, 100%)';
+            baby1.hue = allcircles[j].hue + 10;//'hsl( 0, 0%, 100%)';
 
             let baby2 =new circle();
             baby2.x = allcircles[j].x;
             baby2.y = allcircles[j].y;
             baby2.size = 2;
-            baby2.color = 'hsl( 0, 0%, 100%)';
+            baby2.hue = allcircles[j].hue + 20; //
+            //'hsl( 0, 0%, 100%)';
 
             let baby3 =new circle();
             baby3.x = allcircles[j].x;
             baby3.y = allcircles[j].y;
             baby3.size = 3;
-            baby3.color = 'hsl( 0, 0%, 100%)';
+            baby3.hue = allcircles[j].hue + 30; //
+            'hsl('+baby3.hue+' , 0%, 100%)';
             allcircles.push(baby1, baby2, baby3);
         }  
     }
@@ -102,7 +106,7 @@ function circlecolision (){
     for(j=0; j < allcircles.length -1; j++){
         for(k=0; k < allcircles.length; k++){
             if(j === k){}
-            else if(allcircles[j].size > 5 && allcircles[k].size > 5){
+            else if(allcircles[j].age > 20 && allcircles[k].age > 20){ // stops here
                 let dx = allcircles[j].x - allcircles[k].x;
                 let dy = allcircles[j].y - allcircles[k].y;
                 let distance = Math.sqrt(dx* dx + dy* dy);
@@ -110,27 +114,43 @@ function circlecolision (){
 
                 if(distance > radii){} // not touhcing
                 else if(distance === radii || distance < radii){
-                    console.log(allcircles)
+                   // console.log(allcircles)
                     if(allcircles[j].size < allcircles[k].size){
-                        if(allcircles[j].size > 5){
-                            allcircles[j] = allcircles[j].size - 5;
-                          //  console.log(allcircles[j].size)
+                        if(allcircles[j].size > 3){
+                            console.log(allcircles[j].size)
+                            allcircles[j].size = allcircles[j].size - 3;
+                            
 
                         }
-                        else{allcircles.splice(j,1);}
+                        else{
+                            console.log(allcircles[j]+ "pop")
+                            allcircles.splice(j,1);
+                        }
                         //console.log("pop!"+ j)
                     }
                     else{
-                        if(allcircles[k].size > 5){
-                            allcircles[k] = allcircles[k].size - 5;
-                            console.log(allcircles[k].size); // not getting deleted right 
+                        if(allcircles[k].size > 3){
+                            console.log(allcircles[k].size)
+                            allcircles[k].size = allcircles[k].size - 3;
+                           
+                           // console.log(allcircles[k].size); // not getting deleted right 
                         }
-                        else{allcircles.splice(k,1);}
+                        else{
+                            allcircles.splice(k,1);
+                            console.log(allcircles[k]+ "pop")
+                        }
                        // console.log("pop!"+ k)
                     }
                 }
             }
         }
+    }
+}
+
+function aging(){
+    for(l= 0; l< allcircles.length; l++){
+       // console.log(allcircles)
+        allcircles[l].age = allcircles[l].age+ 1;
     }
 }
 // first i need to fix their collision so its not just from the center
@@ -146,6 +166,7 @@ function handleparticles (){
     wallcolision();
     circlecolision();
     explode();
+    aging();
 }
 
 function init(){
