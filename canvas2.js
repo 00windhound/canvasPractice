@@ -93,7 +93,6 @@ function explode(){
             baby2.size = 2;
             baby2.hue = allcircles[j].hue + 10; 
             baby2.color = 'hsl('+baby2.hue+' , 90%, 40%)';
-            //'hsl( 0, 0%, 100%)';
 
             let baby3 =new circle();
             baby3.x = allcircles[j].x;
@@ -101,8 +100,15 @@ function explode(){
             baby3.size = 3;
             baby3.hue = allcircles[j].hue + 10; 
             baby3.color = 'hsl('+baby3.hue+' , 90%, 40%)';
+
+            let baby4 =new circle();
+            baby4.x = allcircles[j].x;
+            baby4.y = allcircles[j].y;
+            baby4.size = 1;
+            baby4.hue = allcircles[j].hue + 10; 
+            baby4.color = 'hsl('+baby4.hue+' , 90%, 40%)';
             
-            allcircles.push(baby1, baby2, baby3);
+            allcircles.push(baby1, baby2, baby3, baby4);
         }  
     }
 }
@@ -135,7 +141,6 @@ function circlecolision (){
                         }
                         else{
                             allcircles.splice(k,1);
-                            //console.log(allcircles[k]+ "pop")
                         }
                     }
                 }
