@@ -48,25 +48,21 @@ class circle{
 function wallcolision(){
     for(let k=0; k< allcircles.length; k++){
 
-        if(allcircles[k].x < 0){
-            allcircles[k].x = 0;
+        if((allcircles[k].x - allcircles[k].size) < 0){
             allcircles[k].speedx = allcircles[k].speedx * -1;
-            
+            allcircles[k].x = 0 + allcircles[k].size;
         }
-        else if(allcircles[k].x > 1500){
-            allcircles[k].x = 1500
+        else if((allcircles[k].x + allcircles[k].size)> 1500){
             allcircles[k].speedx = allcircles[k].speedx * -1;
-            
+            allcircles[k].x = 1500 - allcircles[k].size;
         }
-        else if(allcircles[k].y < 0){
-            allcircles[k].y = 0;
+        else if((allcircles[k].y - allcircles[k].size) < 0){
             allcircles[k].speedy = allcircles[k].speedy * -1;
-           
+            allcircles[k].y = 0 + allcircles[k].size;
         }
-        else if(allcircles[k].y > 1500){
-            allcircles[k].y = 1500
+        else if((allcircles[k].y + allcircles[k].size) > 1500){
             allcircles[k].speedy = allcircles[k].speedy * -1;
-            
+            allcircles[k].y = 1500 - allcircles[k].size;
         }
         // i want to adjust it so the edge of the circle bounces not the middle
         // also at some point the circles are spawning way below the click
@@ -101,6 +97,42 @@ function explode(){ // l is undefined maybe declair it globally?
         }  
     }
 }
+
+function circlecolision (){
+    for(j=0; j < allcircles.length -1; j++){
+        for(k=0; k < allcircles.length; k++){
+            if(j === k){}
+            else if(allcircles[j].size > 5 && allcircles[k].size > 5){
+                let dx = allcircles[j].x - allcircles[k].x;
+                let dy = allcircles[j].y - allcircles[k].y;
+                let distance = Math.sqrt(dx* dx + dy* dy);
+                let radii = allcircles[j].size + allcircles[k].size;
+
+                if(distance > radii){} // not touhcing
+                else if(distance === radii || distance < radii){
+                    console.log(allcircles)
+                    if(allcircles[j].size < allcircles[k].size){
+                        if(allcircles[j].size > 5){
+                            allcircles[j] = allcircles[j].size - 5;
+                          //  console.log(allcircles[j].size)
+
+                        }
+                        else{allcircles.splice(j,1);}
+                        //console.log("pop!"+ j)
+                    }
+                    else{
+                        if(allcircles[k].size > 5){
+                            allcircles[k] = allcircles[k].size - 5;
+                            console.log(allcircles[k].size); // not getting deleted right 
+                        }
+                        else{allcircles.splice(k,1);}
+                       // console.log("pop!"+ k)
+                    }
+                }
+            }
+        }
+    }
+}
 // first i need to fix their collision so its not just from the center
 // ill make them kill eachother off if they collide. if they collide then figure out which is smaller and delete it. 
 
@@ -112,6 +144,7 @@ function handleparticles (){
         // call explode from here and pass the index
     }
     wallcolision();
+    circlecolision();
     explode();
 }
 
