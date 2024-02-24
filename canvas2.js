@@ -149,6 +149,19 @@ function circlecolision (){
     }
 }
 
+function tinybrain (){
+    for(j=0; j< allcircles.length; j++){
+        for(i=0; i< allcircles.length; i++){
+            if(j === k){}
+            let dx = allcircles[j].x - allcircles[k].x;
+            let dy = allcircles[j].y - allcircles[k].y;
+            let distance = Math.sqrt(dx* dx + dy* dy);
+            // view grows as the circle grows
+              //if distance is within view than check, if i is bigger then move away 
+        }
+    }
+}
+
 function aging(){
     for(l= 0; l< allcircles.length; l++){
        // console.log(allcircles)
