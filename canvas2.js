@@ -156,7 +156,10 @@ function tinybrain (){
             let dx = allcircles[j].x - allcircles[k].x;
             let dy = allcircles[j].y - allcircles[k].y;
             let distance = Math.sqrt(dx* dx + dy* dy);
-            
+            if(distance < allcircles[j].size){
+                
+            }
+
             // measure distance and any circles that are close enough to be in view they react to,
             // view grows as the circle grows
             //if its within view then check if its bigger or smaller and then move towards or away.
