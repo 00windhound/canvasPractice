@@ -156,8 +156,10 @@ function tinybrain (){
             let dx = allcircles[j].x - allcircles[k].x;
             let dy = allcircles[j].y - allcircles[k].y;
             let distance = Math.sqrt(dx* dx + dy* dy);
+            
+            // measure distance and any circles that are close enough to be in view they react to,
             // view grows as the circle grows
-              //if distance is within view than check, if i is bigger then move away 
+            //if its within view then check if its bigger or smaller and then move towards or away.
         }
     }
 }
@@ -167,9 +169,7 @@ function aging(){
        // console.log(allcircles)
         allcircles[l].age = allcircles[l].age+ 1;
     }
-}
-// first i need to fix their collision so its not just from the center
-// ill make them kill eachother off if they collide. if they collide then figure out which is smaller and delete it. 
+} 
 
 function handleparticles (){ 
     for( j =0; j< allcircles.length; j++){
