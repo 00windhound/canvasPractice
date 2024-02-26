@@ -8,4 +8,4 @@ its far less glitchy when it always has the lines and their size doesnt seem to 
 
 i really like how it turned out. so now im going to make new canvas projects. ill have bottons on the top to navigate different projects and theyll all display in the same place.
 
-the program is generally really hard to run and crashes idk how to make it more efficient.
+im finding it pretty hard to learn. i dont have any clear direction or really anything to act as my teacher. this isnt something you can just play with and learn.
