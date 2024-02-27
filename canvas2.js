@@ -19,7 +19,7 @@ canvas.addEventListener('click',function(event){
     //console.log(allcircles)
     allcircles.push(mousecircle);
 })
-// if i scroll then reload it forgets that i scrolled
+// if i scroll then reload it forgets that i scrolled and spawns way below the click
 // now its spawning on either side of my mouse 
 let hue;
 class circle{
@@ -38,8 +38,6 @@ class circle{
     update(){
         this.x += this.speedx;  
         this.y += this.speedy;
-      //  wallcolision();
-       // explode(); // said this is not a function
     }
     draw(){
         ctx.fillStyle = this.color;
@@ -69,8 +67,6 @@ function wallcolision(){
             allcircles[k].speedy = allcircles[k].speedy * -1;
             allcircles[k].y = 1500 - allcircles[k].size;
         }
-        // i want to adjust it so the edge of the circle bounces not the middle
-        // also at some point the circles are spawning way below the click
     }
 }
 let j
@@ -79,7 +75,7 @@ function explode(){
         allcircles[j].size += 0.02;//0.002
         if(allcircles[j].size > 50){
             allcircles[j].size = 4;
-
+            // raise the parent size to retain overall sizes and more crowded circles
             let baby1 = new circle();
             baby1.x = allcircles[j].x;
             baby1.y = allcircles[j].y;
@@ -148,21 +144,27 @@ function circlecolision (){
         }
     }
 }
-
+ 
 function tinybrain (){
     for(j=0; j< allcircles.length; j++){
         for(i=0; i< allcircles.length; i++){
-            if(j === k){}
-            let dx = allcircles[j].x - allcircles[k].x;
-            let dy = allcircles[j].y - allcircles[k].y;
-            let distance = Math.sqrt(dx* dx + dy* dy);
-            if(distance < allcircles[j].size){
-                
+            if(j === i){}
+            else{
+                let dx = allcircles[j].x - allcircles[i].x;
+                let dy = allcircles[j].y - allcircles[i].y;
+                let distance = Math.sqrt(dx* dx + dy* dy);
+                if(distance < allcircles[j].size* 5){
+                    //allcircles[j].color = 'white';
+                    if(allcircles[j].size > allcircles[i].size){
+                        //figure out what direction it is
+                        //go after it without changing speed
+                    }
+                }
             }
-
             // measure distance and any circles that are close enough to be in view they react to,
             // view grows as the circle grows
             //if its within view then check if its bigger or smaller and then move towards or away.
+            // maybe have a new animal or shape that will do this
         }
     }
 }
@@ -185,6 +187,7 @@ function handleparticles (){
     circlecolision();
     explode();
     aging();
+    tinybrain();
 }
 
 function init(){
