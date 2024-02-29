@@ -2,7 +2,6 @@ const canvas = document.getElementById('mycanvas2');
 var ctx = canvas.getContext('2d');
 var canvasrect = canvas.getBoundingClientRect();
 const allcircles = [];
-// x and y should be directly connected to the canvas
 let j;
 let k;
 
@@ -17,8 +16,6 @@ canvas.addEventListener('click',function(event){
     let mousecircle = new circle();
     mousecircle.x = mouse.x;
     mousecircle.y = mouse.y;
-    //console.log(mouse)
-    //console.log(allcircles)
     allcircles.push(mousecircle);
 })
 // if i scroll then reload it forgets that i scrolled and spawns way below the click
@@ -30,9 +27,7 @@ class circle{
     constructor(){
         this.x = Math.random()*1500;
         this.y = Math.random()*1500;
-        //this.x = Math.random()*canvas.Width 
-        //this.y = Math.random()*canvas.height 
-        this.size = Math.random()*50+1;
+        this.size = Math.random()*60+1;
         this.speedx = Math.random()*3-1.5
         this.speedy = Math.random()*3-1.5
         this.hue = 1;
@@ -53,69 +48,35 @@ class circle{
 }
 
 function wallcolision(){
-        if((allcircles[j].x - allcircles[j].size) < 0){
-            allcircles[j].speedx = allcircles[j].speedx * -1;
-            allcircles[j].x = 0 + allcircles[j].size;
-        }
-        else if((allcircles[j].x + allcircles[j].size)> 1500){
-            allcircles[j].speedx = allcircles[j].speedx * -1;
-            allcircles[j].x = 1500 - allcircles[j].size;
-        }
-        else if((allcircles[j].y - allcircles[j].size) < 0){
-            allcircles[j].speedy = allcircles[j].speedy * -1;
-            allcircles[j].y = 0 + allcircles[j].size;
-        }
-        else if((allcircles[j].y + allcircles[j].size) > 1500){
-            allcircles[j].speedy = allcircles[j].speedy * -1;
-            allcircles[j].y = 1500 - allcircles[j].size;
-        }
+    if((allcircles[j].x - allcircles[j].size) < 0){
+        allcircles[j].speedx = allcircles[j].speedx * -1;
+        allcircles[j].x = 0 + allcircles[j].size;
+    }
+    else if((allcircles[j].x + allcircles[j].size)> 1500){
+        allcircles[j].speedx = allcircles[j].speedx * -1;
+        allcircles[j].x = 1500 - allcircles[j].size;
+    }
+    else if((allcircles[j].y - allcircles[j].size) < 0){
+        allcircles[j].speedy = allcircles[j].speedy * -1;
+        allcircles[j].y = 0 + allcircles[j].size;
+    }
+    else if((allcircles[j].y + allcircles[j].size) > 1500){
+        allcircles[j].speedy = allcircles[j].speedy * -1;
+        allcircles[j].y = 1500 - allcircles[j].size;
+    }
 }
 
 function explode(){
     allcircles[j].size += 0.02;//0.002
-    if(allcircles[j].size > 50){
+    if(allcircles[j].size > 60){
         allcircles[j].size = 10;
-            // raise the parent size to retain overall sizes and more crowded circles
-        for(a=0; a<4; a++){
-            babies(j);
+        for(a=0; a<5; a++){
+            babies();
         }
-
-            /*let baby1 = new circle();
-            baby1.x = allcircles[j].x;
-            baby1.y = allcircles[j].y;
-            baby1.size = 1;
-            baby1.hue = allcircles[j].hue + 10;
-            baby1.color = 'hsl('+baby1.hue+' , 90%, 40%)';
-
-            let baby2 =new circle();
-            baby2.x = allcircles[j].x;
-            baby2.y = allcircles[j].y;
-            baby2.size = 2;
-            baby2.hue = allcircles[j].hue + 10; 
-            baby2.color = 'hsl('+baby2.hue+' , 90%, 40%)';
-
-            let baby3 =new circle();
-            baby3.x = allcircles[j].x;
-            baby3.y = allcircles[j].y;
-            baby3.size = 3;
-            baby3.hue = allcircles[j].hue + 10; 
-            baby3.color = 'hsl('+baby3.hue+' , 90%, 40%)';
-
-            let baby4 =new circle();
-            baby4.x = allcircles[j].x;
-            baby4.y = allcircles[j].y;
-            baby4.size = 1;
-            baby4.hue = allcircles[j].hue + 10; 
-            baby4.color = 'hsl('+baby4.hue+' , 90%, 40%)';
-            
-            allcircles.push(baby1, baby2, baby3, baby4);*/
-        }
- 
+    }
 }
-// make a new function that makes the babies for me
-// it should make them with less code and less repetitive 
-// and easy to make more or less babies
-function babies (j){
+
+function babies (){
     let baby1 = new circle();
     baby1.x = allcircles[j].x;
     baby1.y = allcircles[j].y;
@@ -161,30 +122,25 @@ function circlecolision (){
 //have to eat other colors to reproduce?
  
 function tinybrain (){
-   // for(j=0; j< allcircles.length; j++){
-        //for(k=0; i< allcircles.length; i++){
-            if(j === allcircles.length){j = j-1}
-            if(k === allcircles.length){k = k-1}
-            if(j === k){}
-            else{
-                let dx = allcircles[j].x - allcircles[k].x;
-                let dy = allcircles[j].y - allcircles[k].y;
-                let distance = Math.sqrt(dx* dx + dy* dy);
-                if(distance < allcircles[j].size* 5){
-                    //allcircles[j].color = 'white';
-                    if(allcircles[j].size > allcircles[k].size){
-                        //figure out what direction it is
-                        //go after it without changing speed
-                    }
-                }
+    if(j === allcircles.length){j = j-1}
+    if(k === allcircles.length){k = k-1}
+    if(j === k){}
+    else{
+        let dx = allcircles[j].x - allcircles[k].x;
+        let dy = allcircles[j].y - allcircles[k].y;
+        let distance = Math.sqrt(dx* dx + dy* dy);
+        if(distance < allcircles[j].size* 5){
+            //allcircles[j].color = 'white';
+            if(allcircles[j].size > allcircles[k].size){
+                //figure out what direction it is
+                //go after it without changing speed
             }
-        
-            // measure distance and any circles that are close enough to be in view they react to,
-            // view grows as the circle grows
-            //if its within view then check if its bigger or smaller and then move towards or away.
-            // maybe have a new animal or shape that will do this
-       // }
-   // }
+        }
+    }
+    // measure distance and any circles that are close enough to be in view they react to,
+    // view grows as the circle grows
+    //if its within view then check if its bigger or smaller and then move towards or away.
+    // maybe have a new animal or shape that will do this
 }
 
 function itterate (){
