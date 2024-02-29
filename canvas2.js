@@ -3,6 +3,8 @@ var ctx = canvas.getContext('2d');
 var canvasrect = canvas.getBoundingClientRect();
 const allcircles = [];
 // x and y should be directly connected to the canvas
+let j;
+let k;
 
 const mouse ={
     x: undefined ,
@@ -40,6 +42,7 @@ class circle{
     update(){
         this.x += this.speedx;  
         this.y += this.speedy;
+        this.age += 1;
     }
     draw(){
         ctx.fillStyle = this.color;
@@ -50,36 +53,32 @@ class circle{
 }
 
 function wallcolision(){
-    for(let k=0; k< allcircles.length; k++){
-
-        if((allcircles[k].x - allcircles[k].size) < 0){
-            allcircles[k].speedx = allcircles[k].speedx * -1;
-            allcircles[k].x = 0 + allcircles[k].size;
+        if((allcircles[j].x - allcircles[j].size) < 0){
+            allcircles[j].speedx = allcircles[j].speedx * -1;
+            allcircles[j].x = 0 + allcircles[j].size;
         }
-        else if((allcircles[k].x + allcircles[k].size)> 1500){
-            allcircles[k].speedx = allcircles[k].speedx * -1;
-            allcircles[k].x = 1500 - allcircles[k].size;
+        else if((allcircles[j].x + allcircles[j].size)> 1500){
+            allcircles[j].speedx = allcircles[j].speedx * -1;
+            allcircles[j].x = 1500 - allcircles[j].size;
         }
-        else if((allcircles[k].y - allcircles[k].size) < 0){
-            allcircles[k].speedy = allcircles[k].speedy * -1;
-            allcircles[k].y = 0 + allcircles[k].size;
+        else if((allcircles[j].y - allcircles[j].size) < 0){
+            allcircles[j].speedy = allcircles[j].speedy * -1;
+            allcircles[j].y = 0 + allcircles[j].size;
         }
-        else if((allcircles[k].y + allcircles[k].size) > 1500){
-            allcircles[k].speedy = allcircles[k].speedy * -1;
-            allcircles[k].y = 1500 - allcircles[k].size;
+        else if((allcircles[j].y + allcircles[j].size) > 1500){
+            allcircles[j].speedy = allcircles[j].speedy * -1;
+            allcircles[j].y = 1500 - allcircles[j].size;
         }
-    }
 }
-let j
+
 function explode(){
-    for(let j=0; j<allcircles.length; j++){
-        allcircles[j].size += 0.02;//0.002
-        if(allcircles[j].size > 50){
-            allcircles[j].size = 10;
+    allcircles[j].size += 0.02;//0.002
+    if(allcircles[j].size > 50){
+        allcircles[j].size = 10;
             // raise the parent size to retain overall sizes and more crowded circles
-            for(a=0; a<4; a++){
-                babies(j);
-            }
+        for(a=0; a<4; a++){
+            babies(j);
+        }
 
             /*let baby1 = new circle();
             baby1.x = allcircles[j].x;
@@ -110,8 +109,8 @@ function explode(){
             baby4.color = 'hsl('+baby4.hue+' , 90%, 40%)';
             
             allcircles.push(baby1, baby2, baby3, baby4);*/
-        }  
-    }
+        }
+ 
 }
 // make a new function that makes the babies for me
 // it should make them with less code and less repetitive 
@@ -120,7 +119,7 @@ function babies (j){
     let baby1 = new circle();
     baby1.x = allcircles[j].x;
     baby1.y = allcircles[j].y;
-    baby1.size = 1;
+    baby1.size = Math.random()*3
     baby1.hue = allcircles[j].hue + 10;
     baby1.color = 'hsl('+baby1.hue+' , 90%, 40%)';
 
@@ -128,85 +127,77 @@ function babies (j){
 }
 
 function circlecolision (){
-    for(j=0; j < allcircles.length -1; j++){
-        for(k=0; k < allcircles.length; k++){
-            if(j === k){}
-            else if(allcircles[j].age > 100 && allcircles[k].age > 20){ // stops here
-                let dx = allcircles[j].x - allcircles[k].x;
-                let dy = allcircles[j].y - allcircles[k].y;
-                let distance = Math.sqrt(dx* dx + dy* dy);
-                let radii = allcircles[j].size + allcircles[k].size;
+    if(j === k){}
+    else if(allcircles[j].age > 20 && allcircles[k].age > 20){ // stops here
+        let dx = allcircles[j].x - allcircles[k].x;
+        let dy = allcircles[j].y - allcircles[k].y;
+        let distance = Math.sqrt(dx* dx + dy* dy);
+        let radii = allcircles[j].size + allcircles[k].size;
 
-                if(distance > radii){} // not touhcing
-                else if(distance === radii || distance < radii){       
-                    if(allcircles[j].size < allcircles[k].size){
-                        if(allcircles[j].size > 3){
-                            allcircles[j].size = allcircles[j].size - 3;
-                            allcircles[k].size = allcircles[k].size + 1;
-                        }
-                        else{
-                            allcircles.splice(j,1);
-                        }
-                    }
-                    else{
-                        if(allcircles[k].size > 3){
-                            allcircles[k].size = allcircles[k].size - 3;
-                            allcircles[j].size = allcircles[j].size + 1; 
-                        }
-                        else{
-                            allcircles.splice(k,1);
-                        }
-                    }
+        if(distance > radii){} // not touhcing
+        else if(distance === radii || distance < radii){       
+            if(allcircles[j].size < allcircles[k].size){
+                if(allcircles[j].size > 3){
+                    allcircles[j].size = allcircles[j].size - 3;
+                    allcircles[k].size = allcircles[k].size + 1;
+                }
+                else{
+                    allcircles.splice(j,1);
+                }
+            }
+            else{
+                if(allcircles[k].size > 3){
+                    allcircles[k].size = allcircles[k].size - 3;
+                    allcircles[j].size = allcircles[j].size + 1; 
+                }
+                else{
+                    allcircles.splice(k,1);
                 }
             }
         }
     }
 }
-//make the color have more impact like they wont eat their own color, have to eat other colors to reproduce?
+//make the color have more impact like they wont eat their own color, 
+//have to eat other colors to reproduce?
  
 function tinybrain (){
-    for(j=0; j< allcircles.length; j++){
-        for(i=0; i< allcircles.length; i++){
-            if(j === i){}
+   // for(j=0; j< allcircles.length; j++){
+        //for(k=0; i< allcircles.length; i++){
+            if(j === allcircles.length){j = j-1}
+            if(k === allcircles.length){k = k-1}
+            if(j === k){}
             else{
-                let dx = allcircles[j].x - allcircles[i].x;
-                let dy = allcircles[j].y - allcircles[i].y;
+                let dx = allcircles[j].x - allcircles[k].x;
+                let dy = allcircles[j].y - allcircles[k].y;
                 let distance = Math.sqrt(dx* dx + dy* dy);
                 if(distance < allcircles[j].size* 5){
                     //allcircles[j].color = 'white';
-                    if(allcircles[j].size > allcircles[i].size){
+                    if(allcircles[j].size > allcircles[k].size){
                         //figure out what direction it is
                         //go after it without changing speed
                     }
                 }
             }
+        
             // measure distance and any circles that are close enough to be in view they react to,
             // view grows as the circle grows
             //if its within view then check if its bigger or smaller and then move towards or away.
             // maybe have a new animal or shape that will do this
-        }
-    }
+       // }
+   // }
 }
 
-function aging(){
-    for(l= 0; l< allcircles.length; l++){
-       // console.log(allcircles)
-        allcircles[l].age = allcircles[l].age+ 1;
-    }
-} 
-
-function handleparticles (){ 
-    for( j =0; j< allcircles.length; j++){
-        allcircles[j].update(); //throwing an error, not a function
+function itterate (){
+    for(j=0; j< allcircles.length; j++){
+        allcircles[j].update();
         allcircles[j].draw();
-      //  allcircles[j].explode();
-        // call explode from here and pass the index
+        wallcolision();
+        explode();
+        for(k=0; k< allcircles.length; k++){
+            tinybrain();
+            circlecolision();
+        }
     }
-    wallcolision();
-    circlecolision();
-    explode();
-    aging();
-    tinybrain();
 }
 
 function init(){
@@ -242,7 +233,7 @@ init()
 
 function animate(){
     ctx.clearRect(0,0, canvas.clientWidth, canvas.height);
-    handleparticles();
+    itterate();
     requestAnimationFrame(animate);
 }
 animate()
