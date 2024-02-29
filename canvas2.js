@@ -20,7 +20,9 @@ canvas.addEventListener('click',function(event){
     allcircles.push(mousecircle);
 })
 // if i scroll then reload it forgets that i scrolled and spawns way below the click
-// now its spawning on either side of my mouse 
+// now its spawning on either side of my mouse
+
+// what if the player circle fallowed the mouse 
 let hue;
 class circle{
     constructor(){
@@ -28,7 +30,7 @@ class circle{
         this.y = Math.random()*1500;
         //this.x = Math.random()*canvas.Width 
         //this.y = Math.random()*canvas.height 
-        this.size = Math.random()*30+1;
+        this.size = Math.random()*50+1;
         this.speedx = Math.random()*3-1.5
         this.speedy = Math.random()*3-1.5
         this.hue = 1;
@@ -46,8 +48,7 @@ class circle{
         ctx.fill();
     }
 }
-// maybe they constantly grow and when they hit a certan size they explode into babies
-// they also shrink or eat smaller circles when they touch
+
 function wallcolision(){
     for(let k=0; k< allcircles.length; k++){
 
@@ -74,9 +75,13 @@ function explode(){
     for(let j=0; j<allcircles.length; j++){
         allcircles[j].size += 0.02;//0.002
         if(allcircles[j].size > 50){
-            allcircles[j].size = 4;
+            allcircles[j].size = 10;
             // raise the parent size to retain overall sizes and more crowded circles
-            let baby1 = new circle();
+            for(a=0; a<4; a++){
+                babies(j);
+            }
+
+            /*let baby1 = new circle();
             baby1.x = allcircles[j].x;
             baby1.y = allcircles[j].y;
             baby1.size = 1;
@@ -104,16 +109,29 @@ function explode(){
             baby4.hue = allcircles[j].hue + 10; 
             baby4.color = 'hsl('+baby4.hue+' , 90%, 40%)';
             
-            allcircles.push(baby1, baby2, baby3, baby4);
+            allcircles.push(baby1, baby2, baby3, baby4);*/
         }  
     }
+}
+// make a new function that makes the babies for me
+// it should make them with less code and less repetitive 
+// and easy to make more or less babies
+function babies (j){
+    let baby1 = new circle();
+    baby1.x = allcircles[j].x;
+    baby1.y = allcircles[j].y;
+    baby1.size = 1;
+    baby1.hue = allcircles[j].hue + 10;
+    baby1.color = 'hsl('+baby1.hue+' , 90%, 40%)';
+
+    allcircles.push(baby1)
 }
 
 function circlecolision (){
     for(j=0; j < allcircles.length -1; j++){
         for(k=0; k < allcircles.length; k++){
             if(j === k){}
-            else if(allcircles[j].age > 20 && allcircles[k].age > 20){ // stops here
+            else if(allcircles[j].age > 100 && allcircles[k].age > 20){ // stops here
                 let dx = allcircles[j].x - allcircles[k].x;
                 let dy = allcircles[j].y - allcircles[k].y;
                 let distance = Math.sqrt(dx* dx + dy* dy);
@@ -144,6 +162,7 @@ function circlecolision (){
         }
     }
 }
+//make the color have more impact like they wont eat their own color, have to eat other colors to reproduce?
  
 function tinybrain (){
     for(j=0; j< allcircles.length; j++){
