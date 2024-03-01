@@ -23,14 +23,13 @@ const mouse ={
 
 
 
-canvas.addEventListener('click', function(event){
+canvas.addEventListener('mousemove', function(event){
     mouse.x = event.clientX - canvasrect.left + window.scrollX;
     mouse.y = event.clientY - canvasrect.top + window.scrollY;
     player1.x = mouse.x;
     player1.y = mouse.y;
 } )
 // if i scroll then reload it forgets that i scrolled and spawns way below the click
-// now its spawning on either side of my mouse
 
 // what if the player circle fallowed the mouse 
 
@@ -42,20 +41,21 @@ class player{
        this.color = 'white';
     }
     drawplayer(){
+        ctx.moveTo(this.x, this.y)
         ctx.fillstyle = this.color;
-        ctx.beginPath();
+        //ctx.beginPath();
         ctx.arc(this.x, this.y, this.size,0,Math.PI*2);
-        ctx.fill;
+        ctx.fill();
+        ctx.stroke();
     }
+    playerwalls(){
+        // use size to not go past the walls
+    }
+    // make it interact with other circles, eat or be eatten
+    // player doesnt grow automatically
 }
 
-let player1 = new player();
-
-function square(){
-ctx.fillstyle = "red";
-ctx.rect(10,10,40,40);
-ctx.fill();
-}
+let player1 = new player(); // changing based on other circles
 
 class circle{
     constructor(){
@@ -224,7 +224,6 @@ init()
 function animate(){
     ctx.clearRect(0,0, canvas.clientWidth, canvas.height);
     itterate();
-    square();
     player1.drawplayer();
     requestAnimationFrame(animate);
 }
