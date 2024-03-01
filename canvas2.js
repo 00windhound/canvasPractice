@@ -50,10 +50,49 @@ class player{
     }
     playerwalls(){
         // use size to not go past the walls
+        if((this.x - this.size )< 0){
+            this.x = 0 + this.size; 
+        }
+        else if((this.x + this.size) > 1500){
+            this.x = 1500 - this.size;
+        }
+        else if((this.y - this.size) < 0){
+            this.y = 0 + this.size;
+        }
+        else if((this.y + this.size)> 1500){
+            this.y = 1500 - this.size; // not working
+        }
+    }
+    playercolision(){
+        let dx = player1.x - allcircles[j].x;
+        let dy= player1.y - allcircles[j].y;
+        let distance = Math.sqrt(dx* dx + dy* dy);
+        let radii = player1.size + allcircles[j].size
+
+        if(distance > radii){}
+        else if(distance < radii || distance === radii){
+            if(player1.size < allcircles[j].size){
+               if(player1.size > 3){ 
+                    player1.size = player1.size - 3;
+                    allcircles[j].size = allcircles[j].size +1;
+                }
+                else{
+                    player1.size = 1;
+                }
+            }
+            else{
+                player1.size = player1.size + 1;
+                allcircles[j].size = allcircles[j].size - 3;
+                if(allcircles[j].size < 1){
+                    allcircles.splice(j,1);
+                }
+            }
+        }
     }
     // make it interact with other circles, eat or be eatten
     // player doesnt grow automatically
 }
+// keep count of how many circles of each color, goal to keep the diversity
 
 let player1 = new player(); // changing based on other circles
 
@@ -183,6 +222,7 @@ function itterate (){
         allcircles[j].draw();
         wallcolision();
         explode();
+        player1.playercolision();
         for(k=0; k< allcircles.length; k++){
             tinybrain();
             circlecolision();
