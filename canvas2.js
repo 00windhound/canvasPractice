@@ -2,6 +2,7 @@ const canvas = document.getElementById('mycanvas2');
 var ctx = canvas.getContext('2d');
 var canvasrect = canvas.getBoundingClientRect();
 const allcircles = [];
+let hue;
 let j;
 let k;
 
@@ -10,19 +11,52 @@ const mouse ={
     y: undefined,
 }
 
-canvas.addEventListener('click',function(event){
+/*canvas.addEventListener('click',function(event){
     mouse.x = event.clientX - canvasrect.left + window.scrollX;
     mouse.y = event.clientY - canvasrect.top + window.scrollY;
     let mousecircle = new circle();
     mousecircle.x = mouse.x;
     mousecircle.y = mouse.y;
     allcircles.push(mousecircle);
-})
+
+})*/
+
+
+
+canvas.addEventListener('click', function(event){
+    mouse.x = event.clientX - canvasrect.left + window.scrollX;
+    mouse.y = event.clientY - canvasrect.top + window.scrollY;
+    player1.x = mouse.x;
+    player1.y = mouse.y;
+} )
 // if i scroll then reload it forgets that i scrolled and spawns way below the click
 // now its spawning on either side of my mouse
 
 // what if the player circle fallowed the mouse 
-let hue;
+
+class player{
+    constructor(){
+       this.x = 10;
+       this.y = 10;
+       this.size = 10;
+       this.color = 'white';
+    }
+    drawplayer(){
+        ctx.fillstyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size,0,Math.PI*2);
+        ctx.fill;
+    }
+}
+
+let player1 = new player();
+
+function square(){
+ctx.fillstyle = "red";
+ctx.rect(10,10,40,40);
+ctx.fill();
+}
+
 class circle{
     constructor(){
         this.x = Math.random()*1500;
@@ -190,6 +224,8 @@ init()
 function animate(){
     ctx.clearRect(0,0, canvas.clientWidth, canvas.height);
     itterate();
+    square();
+    player1.drawplayer();
     requestAnimationFrame(animate);
 }
 animate()
