@@ -69,28 +69,49 @@ class player{
         let distance = Math.sqrt(dx* dx + dy* dy);
         let radii = player1.size + allcircles[j].size
 
-        if(distance > radii){}
-        else if(distance < radii || distance === radii){
-            if(player1.size < allcircles[j].size){
-               if(player1.size > 3){ 
-                    player1.size = player1.size - 3;
-                    allcircles[j].size = allcircles[j].size +1;
+        if(allcircles[j].age > 20){
+            if(distance > radii){}
+            else if(distance < radii || distance === radii){
+                if(player1.size < allcircles[j].size){
+                if(player1.size > 3){ 
+                        player1.size = player1.size - 3;
+                        allcircles[j].size = allcircles[j].size +1;
+                    }
+                    else{
+                        player1.size = 3;
+                    }
                 }
                 else{
-                    player1.size = 1;
-                }
-            }
-            else{
-                player1.size = player1.size + 1;
-                allcircles[j].size = allcircles[j].size - 3;
-                if(allcircles[j].size < 1){
-                    allcircles.splice(j,1);
+                    player1.size = player1.size + 1;
+                    allcircles[j].size = allcircles[j].size - 3;
+                    if(allcircles[j].size < 1){
+                        allcircles.splice(j,1);
+                    }
                 }
             }
         }
     }
     // make it interact with other circles, eat or be eatten
     // player doesnt grow automatically
+    playersplosion(){
+        if(this.size > 60){
+            this.size = 10
+            for(let x=0; x<5; x++){
+                playerbabies();
+            }
+        }
+    }
+}
+
+function playerbabies (){
+    let baby1 = new circle();
+    baby1.x = player1.x;
+    baby1.y = player1.y;
+    baby1.size = Math.random()*3
+    baby1.hue = 1;
+    baby1.color = 'hsl('+baby1.hue+' , 90%, 95%)';
+
+    allcircles.push(baby1)
 }
 // keep count of how many circles of each color, goal to keep the diversity
 
@@ -223,6 +244,7 @@ function itterate (){
         wallcolision();
         explode();
         player1.playercolision();
+        player1.playersplosion();
         for(k=0; k< allcircles.length; k++){
             tinybrain();
             circlecolision();
