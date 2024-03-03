@@ -2,26 +2,15 @@ const canvas = document.getElementById('mycanvas2');
 var ctx = canvas.getContext('2d');
 var canvasrect = canvas.getBoundingClientRect();
 const allcircles = [];
-let hue;
+let group;
 let j;
 let k;
+
 
 const mouse ={
     x: undefined ,
     y: undefined,
 }
-
-/*canvas.addEventListener('click',function(event){
-    mouse.x = event.clientX - canvasrect.left + window.scrollX;
-    mouse.y = event.clientY - canvasrect.top + window.scrollY;
-    let mousecircle = new circle();
-    mousecircle.x = mouse.x;
-    mousecircle.y = mouse.y;
-    allcircles.push(mousecircle);
-
-})*/
-
-
 
 canvas.addEventListener('mousemove', function(event){
     mouse.x = event.clientX - canvasrect.left + window.scrollX;
@@ -42,7 +31,7 @@ class player{
     }
     drawplayer(){
         ctx.moveTo(this.x, this.y)
-        ctx.fillstyle = this.color;
+        ctx.fillstyle = 'white';
         //ctx.beginPath();
         ctx.arc(this.x, this.y, this.size,0,Math.PI*2);
         ctx.fill();
@@ -91,11 +80,10 @@ class player{
             }
         }
     }
-    // make it interact with other circles, eat or be eatten
     // player doesnt grow automatically
     // fix the colors so i can start keeping track of them better
     playersplosion(){
-        if(this.size > 60){
+        if(this.size > 70){
             this.size = 10
             for(let x=0; x<5; x++){
                 playerbabies();
@@ -109,12 +97,13 @@ function playerbabies (){
     baby1.x = player1.x;
     baby1.y = player1.y;
     baby1.size = Math.random()*3
-    baby1.hue = 1;
-    baby1.color = 'hsl('+baby1.hue+' , 90%, 95%)';
+    baby1.group = 4;
+    baby1.color = 'white';
 
     allcircles.push(baby1)
 }
 // keep count of how many circles of each color, goal to keep the diversity
+// parents stay big babies spawn at the edge to stay alive
 
 let player1 = new player(); // changing based on other circles
 
@@ -125,8 +114,8 @@ class circle{
         this.size = Math.random()*60+1;
         this.speedx = Math.random()*3-1.5
         this.speedy = Math.random()*3-1.5
-        this.hue = 1;
-        this.color = 'hsl('+this.hue +', 90%, 40%)';
+        this.group = this.group;
+        this.color = this.color;
         this.age = 0;
     }
     update(){
@@ -163,9 +152,9 @@ function wallcolision(){
 
 function explode(){
     allcircles[j].size += 0.02;//0.002
-    if(allcircles[j].size > 60){
+    if(allcircles[j].size > 70){
         allcircles[j].size = 10;
-        for(a=0; a<5; a++){
+        for(a=0; a<6; a++){
             babies();
         }
     }
@@ -176,8 +165,8 @@ function babies (){
     baby1.x = allcircles[j].x;
     baby1.y = allcircles[j].y;
     baby1.size = Math.random()*3
-    baby1.hue = allcircles[j].hue + 10;
-    baby1.color = 'hsl('+baby1.hue+' , 90%, 40%)';
+    baby1.group = allcircles[j].group;
+    baby1.color = allcircles[j].color;
 
     allcircles.push(baby1)
 }
@@ -266,18 +255,18 @@ function init(){
     let blue1 = new circle();
     let blue2 = new circle();
 
-    red1.hue = 0; 
-    red1.color = 'hsl('+red1.hue+' , 90%, 40%)';
-    red2.hue = 0; 
-    red2.color = 'hsl('+red2.hue+' , 90%, 40%)';
-    yellow1.hue = 60; 
-    yellow1.color = 'hsl('+yellow1.hue+' , 90%, 40%)';
-    yellow2.hue = 60; 
-    yellow2.color = 'hsl('+yellow2.hue+' , 90%, 40%)';
-    blue1.hue = 240; 
-    blue1.color = 'hsl('+blue1.hue+' , 90%, 40%)';
-    blue2.hue = 240; 
-    blue2.color = 'hsl('+blue2.hue+' , 90%, 40%)';
+    red1.group = 1; 
+    red1.color = 'red';
+    red2.group = 1; 
+    red2.color = 'red';
+    yellow1.group = 2; 
+    yellow1.color = 'yellow';
+    yellow2.group = 2; 
+    yellow2.color = 'yellow';
+    blue1.group = 3; 
+    blue1.color = 'blue';
+    blue2.group = 3; 
+    blue2.color = 'blue';
 
     allcircles.push(red1, red2, yellow1, yellow2, blue1, blue2);
     console.log(allcircles);

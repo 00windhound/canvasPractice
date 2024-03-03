@@ -19,3 +19,31 @@ button{
 button:hover{
     background-color: hsl(0, 0%, 80%);
 }
+#counters{
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 130px;
+}
+.boxes{
+    width: 60px;
+    height: 60px;
+    border: 3px black solid;
+    text-align: center;
+    font-size: 2em;
+    border-radius: 3px;
+}
+#box1{
+    background-color: red;
+}
+#box2{
+    background-color: yellow;
+}
+#box3{
+    background-color: blue;
+}
+#box4{
+    background-color: white;
+}
