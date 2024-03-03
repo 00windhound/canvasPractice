@@ -93,6 +93,7 @@ class player{
     }
     // make it interact with other circles, eat or be eatten
     // player doesnt grow automatically
+    // fix the colors so i can start keeping track of them better
     playersplosion(){
         if(this.size > 60){
             this.size = 10
