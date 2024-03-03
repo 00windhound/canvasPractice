@@ -230,13 +230,36 @@ function tinybrain (){
     //if its within view then check if its bigger or smaller and then move towards or away.
     // maybe have a new animal or shape that will do this
 }
+
 let red= 0;
+let yellow= 0;
+let blue= 0;
+let white= 0;
+
 function counter(){
+    if(j === 0){
+        red = 0;
+        yellow = 0;
+        blue = 0;
+        white = 0;
+    }
     if(allcircles[j].group === 1){
         red = red += 1;
     }
+    else if(allcircles[j].group === 2){
+        yellow = yellow += 1;
+    }
+    else if(allcircles[j].group === 3){
+        blue = blue += 1;
+    }
+    else if(allcircles[j].group === 4){
+        white = white += 1;
+    }
     box1.innerHTML = red;
-} // counting up infinatly
+    box2.innerHTML = yellow;
+    box3.innerHTML = blue;
+    box4.innerHTML = white;
+}
 
 function itterate (){
     for(j=0; j< allcircles.length; j++){
