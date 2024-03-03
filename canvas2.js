@@ -2,6 +2,10 @@ const canvas = document.getElementById('mycanvas2');
 var ctx = canvas.getContext('2d');
 var canvasrect = canvas.getBoundingClientRect();
 const allcircles = [];
+let box1 = document.getElementById('box1');
+let box2 = document.getElementById('box2');
+let box3 = document.getElementById('box3');
+let box4 = document.getElementById('box4');
 let group;
 let j;
 let k;
@@ -226,6 +230,13 @@ function tinybrain (){
     //if its within view then check if its bigger or smaller and then move towards or away.
     // maybe have a new animal or shape that will do this
 }
+let red= 0;
+function counter(){
+    if(allcircles[j].group === 1){
+        red = red += 1;
+    }
+    box1.innerHTML = red;
+} // counting up infinatly
 
 function itterate (){
     for(j=0; j< allcircles.length; j++){
@@ -233,6 +244,7 @@ function itterate (){
         allcircles[j].draw();
         wallcolision();
         explode();
+        counter();
         player1.playercolision();
         player1.playersplosion();
         for(k=0; k< allcircles.length; k++){
