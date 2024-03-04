@@ -35,7 +35,7 @@ class player{
     }
     drawplayer(){
         ctx.moveTo(this.x, this.y)
-        ctx.fillstyle = 'white';
+        ctx.fillstyle = this.color;
         //ctx.beginPath();
         ctx.arc(this.x, this.y, this.size,0,Math.PI*2);
         ctx.fill();
@@ -87,7 +87,7 @@ class player{
     // player doesnt grow automatically
     // fix the colors so i can start keeping track of them better
     playersplosion(){
-        if(this.size > 70){
+        if(this.size > 60){
             this.size = 10
             for(let x=0; x<5; x++){
                 playerbabies();
@@ -106,8 +106,10 @@ function playerbabies (){
 
     allcircles.push(baby1)
 }
-// keep count of how many circles of each color, goal to keep the diversity
+// fix the player color
+// make counter clickable so you can bring back colors
 // parents stay big babies spawn at the edge to stay alive
+
 
 let player1 = new player(); // changing based on other circles
 
@@ -156,21 +158,21 @@ function wallcolision(){
 
 function explode(){
     allcircles[j].size += 0.02;//0.002
-    if(allcircles[j].size > 70){
+    if(allcircles[j].size > 60){
         allcircles[j].size = 10;
         for(a=0; a<6; a++){
-            babies();
+            babies(allcircles[j].x, allcircles[j].y, allcircles[j].group, allcircles[j].color);
         }
     }
 }
 
-function babies (){
+function babies (x,y,group,color){
     let baby1 = new circle();
-    baby1.x = allcircles[j].x;
-    baby1.y = allcircles[j].y;
-    baby1.size = Math.random()*3
-    baby1.group = allcircles[j].group;
-    baby1.color = allcircles[j].color;
+    baby1.x = x//allcircles[j].x;
+    baby1.y = y // allcircles[j].y;
+    baby1.size = Math.random()*2
+    baby1.group = group //allcircles[j].group;
+    baby1.color = color //allcircles[j].color;
 
     allcircles.push(baby1)
 }
@@ -225,6 +227,7 @@ function tinybrain (){
             }
         }
     }
+    // spawn babies at edge so the buttons work when player is big
     // measure distance and any circles that are close enough to be in view they react to,
     // view grows as the circle grows
     //if its within view then check if its bigger or smaller and then move towards or away.
@@ -259,6 +262,23 @@ function counter(){
     box2.innerHTML = yellow;
     box3.innerHTML = blue;
     box4.innerHTML = white;
+}
+
+function clickbabies(l){
+    switch(l){
+        case 1:
+            babies(player1.x, player1.y, 1, 'red');
+            break;
+        case 2:
+            babies(player1.x, player1.y, 2, 'yellow');
+            break;
+        case 3:
+            babies(player1.x, player1.y, 3, 'blue');
+            break;
+        case 4:
+            babies(player1.x, player1.y, 4, 'white');
+            break;
+    }
 }
 
 function itterate (){
