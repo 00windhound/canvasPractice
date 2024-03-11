@@ -12,8 +12,12 @@ let k;
 
 
 const mouse ={
-    x: undefined ,
+    x: undefined,
     y: undefined,
+}
+const e ={
+    x:undefined,
+    y:undefined
 }
 
 canvas.addEventListener('mousemove', function(event){
@@ -23,20 +27,8 @@ canvas.addEventListener('mousemove', function(event){
     player1.y = mouse.y;
 } )
 
-canvas.addEventListener('mousemove', function(event){
-   if(event.y < 150){
-    window.scrollBy(0,-5)
-   }
-   else if(event.y > 550){
-    window.scrollBy(0, 5)
-   }
-    // the scroll should happen as long as the mouse is in range
-    // no just on move
-    
-})
-// if i scroll then reload it forgets that i scrolled and spawns way below the click
 
-// what if the player circle fallowed the mouse 
+// if i scroll then reload it forgets that i scrolled and spawns way below the click 
 
 class player{
     constructor(){
@@ -54,7 +46,6 @@ class player{
         ctx.stroke();
     }
     playerwalls(){
-        // use size to not go past the walls
         if((this.x - this.size )< 0){
             this.x = 0 + this.size; 
         }
@@ -65,7 +56,7 @@ class player{
             this.y = 0 + this.size;
         }
         else if((this.y + this.size)> 1500){
-            this.y = 1500 - this.size; // not working
+            this.y = 1500 - this.size;
         }
     }
     playercolision(){
@@ -148,6 +139,22 @@ class circle{
         ctx.fill();
     }
 }
+
+function scrolling (){
+    canvas.addEventListener('mousemove',function(event){
+        e.x = event.x;
+        e.y = event.y;
+    })
+        if(e.y < 150){
+         window.scrollBy(0,-3)
+        }
+        else if(e.y > 550){
+         window.scrollBy(0, 3)
+        }
+         // the scroll should happen as long as the mouse is in range
+         // no just on move
+}
+
 
 function wallcolision(){
     if((allcircles[j].x - allcircles[j].size) < 0){
@@ -343,6 +350,7 @@ init()
 function animate(){
     ctx.clearRect(0,0, canvas.clientWidth, canvas.height);
     itterate();
+    //scrolling();
     player1.drawplayer();
     requestAnimationFrame(animate);
 }
