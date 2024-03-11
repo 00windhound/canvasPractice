@@ -22,6 +22,18 @@ canvas.addEventListener('mousemove', function(event){
     player1.x = mouse.x;
     player1.y = mouse.y;
 } )
+
+canvas.addEventListener('mousemove', function(event){
+   if(event.y < 150){
+    window.scrollBy(0,-5)
+   }
+   else if(event.y > 550){
+    window.scrollBy(0, 5)
+   }
+    // the scroll should happen as long as the mouse is in range
+    // no just on move
+    
+})
 // if i scroll then reload it forgets that i scrolled and spawns way below the click
 
 // what if the player circle fallowed the mouse 
