@@ -9,6 +9,9 @@ let box4 = document.getElementById('box4');
 let group;
 let j;
 let k;
+allcircles[] = JSON.parse(localStorage.getItem("savedarray"))
+// populate with saved circles on load 
+// constantly save circles
 
 
 const mouse ={
@@ -25,6 +28,8 @@ canvas.addEventListener('mousemove', function(event){
     mouse.y = event.clientY - canvasrect.top + window.scrollY;
     player1.x = mouse.x;
     player1.y = mouse.y;
+    e.x = event.clientX;
+    e.y = event.clientY;
 } )
 
 
@@ -141,18 +146,14 @@ class circle{
 }
 
 function scrolling (){
-    canvas.addEventListener('mousemove',function(event){
-        e.x = event.x;
-        e.y = event.y;
-    })
-        if(e.y < 150){
-         window.scrollBy(0,-3)
-        }
-        else if(e.y > 550){
-         window.scrollBy(0, 3)
-        }
-         // the scroll should happen as long as the mouse is in range
-         // no just on move
+    if(e.y < 150){
+     window.scrollBy(0,-3)
+    }
+    else if(e.y > 550){
+     window.scrollBy(0, 3)
+    }
+     // the scroll should happen as long as the mouse is in range
+     // no just on move
 }
 
 
@@ -314,6 +315,7 @@ function itterate (){
             circlecolision();
         }
     }
+    scrolling();
 }
 
 function init(){
@@ -350,7 +352,6 @@ init()
 function animate(){
     ctx.clearRect(0,0, canvas.clientWidth, canvas.height);
     itterate();
-    //scrolling();
     player1.drawplayer();
     requestAnimationFrame(animate);
 }
