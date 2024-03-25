@@ -1,7 +1,8 @@
 const canvas = document.getElementById('mycanvas2');
 var ctx = canvas.getContext('2d');
 var canvasrect = canvas.getBoundingClientRect();
-const allcircles = [];
+let allcircles = [];
+var savedcircles = JSON.parse(localStorage.getItem("savedcircles")) || []
 let box1 = document.getElementById('box1');
 let box2 = document.getElementById('box2');
 let box3 = document.getElementById('box3');
@@ -9,9 +10,9 @@ let box4 = document.getElementById('box4');
 let group;
 let j;
 let k;
-allcircles[] = JSON.parse(localStorage.getItem("savedarray"))
 // populate with saved circles on load 
 // constantly save circles
+
 
 
 const mouse ={
@@ -179,12 +180,14 @@ function wallcolision(){
 function explode(){
     allcircles[j].size += 0.02;//0.002
     if(allcircles[j].size > 60){
-        allcircles[j].size = 10;
+        allcircles[j].size = 15;
         for(a=0; a<6; a++){
             babies(allcircles[j].x, allcircles[j].y, allcircles[j].group, allcircles[j].color);
         }
     }
 }
+// if group 2 yellow then pop when still small
+// when red or blue pop they stay big and babies spawn at edge of circle
 
 function babies (x,y,group,color){
     let baby1 = new circle();
@@ -228,6 +231,13 @@ function circlecolision (){
         }
     }
 }
+//yellow will gradually slow down and stop. pop when it stops
+//red has to eat to grow 
+//blue
+//white only gets killed by player but shrinks down by other circles
+
+
+//group 2 will stop if not ontop of another circle but travels as babies
 //make the color have more impact like they wont eat their own color, 
 //have to eat other colors to reproduce?
  
@@ -316,6 +326,7 @@ function itterate (){
         }
     }
     scrolling();
+    localStorage.setItem("savedcircles",JSON.stringify(allcircles));
 }
 
 function init(){
@@ -347,7 +358,7 @@ function init(){
     allcircles.push(red1, red2, yellow1, yellow2, blue1, blue2);
     console.log(allcircles);
 }
-init()
+
 
 function animate(){
     ctx.clearRect(0,0, canvas.clientWidth, canvas.height);
@@ -356,3 +367,25 @@ function animate(){
     requestAnimationFrame(animate);
 }
 animate()
+
+function reset(){
+    allcircles = []
+    localStorage.setItem("savedcircles",JSON.stringify(allcircles));
+    init();
+   // animate();
+   // reset is working the problem is the reload its not saving as circles just as objects
+}
+
+for(let l=0; l< savedcircles.length; l++){
+    var saved = new circle();
+    saved.x = savedcircles[l].x
+    saved.y = savedcircles[l].y
+    saved.size = savedcircles[l].size
+    saved.speedx = savedcircles[l].speedx
+    saved.speedy = savedcircles[l].speedy
+    saved.group = savedcircles[l].group
+    saved.color = savedcircles[l].color
+    saved.age = savedcircles[l].age
+    allcircles.push(saved)
+} 
+// its producing extra circles on each load
